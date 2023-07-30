@@ -1,0 +1,10 @@
+:root {
+  --scheme: ligth dark;
+  color-scheme: var(--scheme);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}/*# sourceMappingURL=main.css.map */
