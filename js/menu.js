@@ -1,4 +1,4 @@
-const {app, Menu } = require('electron')
+const { app, Menu } = require('electron')
 
 const isMac = process.platform === 'darwin',
     isWindows = process.platform === 'win32',
@@ -12,7 +12,7 @@ const setMainMenu = (mainWindow) => {
                 { 
                     label: 'Create',
                     click: () => {
-
+                        
                     }
                 },
                 {type: 'separator'},
@@ -25,13 +25,19 @@ const setMainMenu = (mainWindow) => {
                 {
                     label: 'Light',
                     click: () => {
-                        mainWindow.webContents.send('update-theme', 'light')
+                        mainWindow.webContents.send('update-theme', {
+                            value: 'light',
+                            color: '#ffffff'
+                        })
                     }
                 },
                 {
                     label: 'Dark',
                     click: () => {
-                        mainWindow.webContents.send('update-theme', 'dark')
+                        mainWindow.webContents.send('update-theme', {
+                            value: 'dark',
+                            color: '#000000'
+                        })
                     }
                 },
             ]

@@ -1,10 +1,266 @@
 :root {
   --scheme: ligth dark;
-  color-scheme: var(--scheme);
+  --gray: #bdc3c7;
+  --gray2: #95a5a6;
+  --input-height: 42px;
+  --screen: 2048/1536;
+  --primary: #3333CC;
+  --seconday: #000000;
+  --third: #34495e;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  position: relative;
+  counter-reset: divCounter;
+}
+
+input, button {
+  width: 100%;
+  min-height: var(--input-height);
+  padding-inline: 14px;
+  font-size: 16px;
+  border-radius: 0;
+}
+
+.w-100, .wh-100, .sidebar .drag_drop input, .sidebar_content, .entry button::before {
+  width: 100%;
+}
+
+.h-100, .wh-100, .sidebar .drag_drop input, .sidebar_content, .entry button::before {
+  height: 100%;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.mvh-100 {
+  min-height: 100vh;
+}
+
+.center, .views .thumb.add div, .views .thumb:not(.add)::before, .views .thumb {
+  display: grid;
+  place-items: center;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+a, button, [type=submit] {
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+input, button, select, option {
+  outline: none;
+}
+
+.canvas {
+  height: 100vh;
+  overflow: hidden;
+  background: var(--gray);
+}
+.canvas_container {
+  display: flex;
+  height: 100%;
+  aspect-ratio: var(--screen);
+  width: auto;
+  margin-inline: auto;
+  background: white;
+}
+
+.contenedor {
+  width: min(92%, 1400px);
+  margin-inline: auto;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.entry .contenido {
+  width: min(100%, 400px);
+  margin: 0 auto;
+}
+.entry p {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 18px;
+  padding-bottom: 4px;
+  width: 100%;
+  border-bottom: 1px solid rgba(189, 195, 199, 0.6);
+  font-size: 14px;
+}
+.entry form > div {
+  margin-bottom: 8px;
+}
+.entry form label {
+  width: 100%;
+  display: block;
+  text-align: right;
+  font-size: 12px;
+  color: var(--gray2);
+}
+.entry input {
+  border: 1px solid var(--gray);
+  text-align: center;
+}
+.entry button {
+  color: white;
+  border: 2px solid var(--primary);
+  position: relative;
+  font-weight: 500;
+  background: transparent;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.entry button::before {
+  content: "";
+  position: absolute;
+  background: var(--primary);
+  inset: 0;
+  z-index: -1;
+  transition: all 0.25s ease;
+}
+.entry button:hover {
+  color: var(--primary);
+}
+.entry button:hover::before {
+  left: -100%;
+}
+
+.views .thumb.add div {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+}
+
+.views {
+  padding: 4rem 0;
+}
+.views_grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+.views .thumb {
+  width: 100%;
+  max-width: 194px;
+  aspect-ratio: var(--screen);
+  height: auto;
+  border: 1px solid var(--gray);
+}
+.views .thumb:not(.add) {
+  position: relative;
+}
+.views .thumb:not(.add)::before {
+  position: absolute;
+  content: counter(divCounter);
+  counter-increment: divCounter;
+  background: var(--primary);
+  color: white;
+  width: 30px;
+  height: 30px;
+  top: -15px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  right: -15px;
+  z-index: 2;
+  font-size: 14px;
+}
+.views .thumb:not(.add)::after {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+  transition: all 0.2s ease;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+}
+.views .thumb:not(.add):empty:hover::after {
+  opacity: 1;
+}
+.views .thumb.add {
+  cursor: pointer;
+  order: 100;
+}
+.views .thumb.add div {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  width: min(96%, 30vw);
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  left: -30vw;
+  z-index: 5;
+  height: 100vh;
+  transition: all 0.2s ease;
+}
+.sidebar.active {
+  left: 0;
+}
+.sidebar > div {
+  background: var(--primary);
+}
+.sidebar_button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 24px;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  border-radius: 0 5px 5px 0;
+  right: -24px;
+  align-items: center;
+}
+.sidebar_button svg, .sidebar_button path {
+  width: 100%;
+  fill: white;
+}
+.sidebar_content {
+  padding: 5%;
+}
+.sidebar .drag_drop {
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: white;
+  display: grid;
+  place-items: center;
+}
+.sidebar .drag_drop input {
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 0;
+  opacity: 0;
 }/*# sourceMappingURL=main.css.map */
