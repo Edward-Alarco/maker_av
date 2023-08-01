@@ -1,4 +1,5 @@
-const {app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
+const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
+const Store = require('electron-store');
 const { setMainMenu } = require('./js/menu.js')
 const path = require('path')
 

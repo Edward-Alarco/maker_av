@@ -21,7 +21,8 @@ body {
   counter-reset: divCounter;
 }
 
-input, button {
+input,
+button {
   width: 100%;
   min-height: var(--input-height);
   padding-inline: 14px;
@@ -29,15 +30,15 @@ input, button {
   border-radius: 0;
 }
 
-.w-100, .wh-100, .sidebar .drag_drop input, .sidebar_content, .entry button::before {
+.w-100, .wh-100, .sidebar .drag_drop input, .sidebar_content, .canvas_bg, .canvas_container > input, .views_Add::before, .entry button::before {
   width: 100%;
 }
 
-.h-100, .wh-100, .sidebar .drag_drop input, .sidebar_content, .entry button::before {
+.h-100, .wh-100, .sidebar .drag_drop input, .sidebar_content, .canvas_bg, .canvas_container > input, .views_Add::before, .entry button::before {
   height: 100%;
 }
 
-.vh-100 {
+.vh-100, .sidebar_bg {
   height: 100vh;
 }
 
@@ -45,7 +46,7 @@ input, button {
   min-height: 100vh;
 }
 
-.center, .views .thumb.add div, .views .thumb:not(.add)::before, .views .thumb {
+.center {
   display: grid;
   place-items: center;
 }
@@ -58,14 +59,43 @@ input, button {
   position: relative;
 }
 
-a, button, [type=submit] {
+a,
+button,
+[type=submit] {
   transition: all 0.25s ease;
   cursor: pointer;
   text-decoration: none;
 }
 
-input, button, select, option {
+input,
+button,
+select,
+option {
   outline: none;
+}
+
+.views_Add, .entry button {
+  color: white;
+  border: 2px solid var(--primary);
+  position: relative;
+  font-weight: 500;
+  background: transparent;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.views_Add::before, .entry button::before {
+  content: "";
+  position: absolute;
+  background: var(--primary);
+  inset: 0;
+  z-index: -1;
+  transition: all 0.25s ease;
+}
+.views_Add:hover, .entry button:hover {
+  color: var(--primary);
+}
+.views_Add:hover::before, .entry button:hover::before {
+  left: -100%;
 }
 
 .canvas {
@@ -80,6 +110,30 @@ input, button, select, option {
   width: auto;
   margin-inline: auto;
   background: white;
+  position: relative;
+}
+.canvas_container > div {
+  position: absolute;
+}
+.canvas_container > input {
+  position: absolute;
+  inset: 0;
+  min-height: auto;
+  padding: 0;
+  opacity: 0;
+}
+.canvas_container img:not(.canvas_bg) {
+  position: absolute;
+}
+.canvas_container:not(:has(.canvas_bg)) > input {
+  display: none;
+}
+.canvas_bg {
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  -webkit-user-drag: none;
 }
 
 .contenedor {
@@ -120,104 +174,56 @@ input, button, select, option {
   border: 1px solid var(--gray);
   text-align: center;
 }
-.entry button {
-  color: white;
-  border: 2px solid var(--primary);
-  position: relative;
-  font-weight: 500;
-  background: transparent;
-  overflow: hidden;
-  margin-top: 12px;
-}
-.entry button::before {
-  content: "";
-  position: absolute;
-  background: var(--primary);
-  inset: 0;
-  z-index: -1;
-  transition: all 0.25s ease;
-}
-.entry button:hover {
-  color: var(--primary);
-}
-.entry button:hover::before {
-  left: -100%;
-}
-
-.views .thumb.add div {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  aspect-ratio: 1/1;
-}
-
 .views {
-  padding: 4rem 0;
+  padding: 2.6rem 0 4rem;
 }
-.views_grid {
+.views_contenedor {
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  gap: 16px 1.5%;
+  padding-block: 10px;
+}
+.views_Add {
+  min-height: var(--input-height);
+  padding-inline: 14px;
+  font-size: 16px;
+  display: flex;
   align-items: center;
-  gap: 20px;
   justify-content: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 .views .thumb {
-  width: 100%;
-  max-width: 194px;
   aspect-ratio: var(--screen);
-  height: auto;
-  border: 1px solid var(--gray);
-}
-.views .thumb:not(.add) {
-  position: relative;
-}
-.views .thumb:not(.add)::before {
-  position: absolute;
-  content: counter(divCounter);
-  counter-increment: divCounter;
-  background: var(--primary);
-  color: white;
-  width: 30px;
-  height: 30px;
-  top: -15px;
-  border-radius: 50%;
-  aspect-ratio: 1/1;
-  right: -15px;
-  z-index: 2;
-  font-size: 14px;
-}
-.views .thumb:not(.add)::after {
-  content: "";
-  z-index: 1;
-  position: absolute;
-  inset: 0;
-  transition: all 0.2s ease;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-}
-.views .thumb:not(.add):empty:hover::after {
-  opacity: 1;
-}
-.views .thumb.add {
-  cursor: pointer;
-  order: 100;
-}
-.views .thumb.add div {
-  border: 2px solid var(--primary);
-  color: var(--primary);
-  font-size: 18px;
-  font-weight: 600;
+  width: min(100%, 200px);
+  border: 1px solid var(--gray2);
 }
 
 .sidebar {
   position: fixed;
   top: 0;
-  width: min(96%, 30vw);
+  width: min(96%, 26vw);
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
-  left: -30vw;
+  left: -26vw;
   z-index: 5;
   height: 100vh;
   transition: all 0.2s ease;
+}
+.sidebar_bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  background: transparent;
+  cursor: crosshair;
+  z-index: 4;
+  display: none;
+}
+.sidebar_bg.active {
+  display: block;
 }
 .sidebar.active {
   left: 0;
@@ -234,11 +240,13 @@ input, button, select, option {
   height: 50px;
   padding: 6px;
   display: flex;
+  overflow: hidden;
   border-radius: 0 5px 5px 0;
   right: -24px;
   align-items: center;
 }
-.sidebar_button svg, .sidebar_button path {
+.sidebar_button svg,
+.sidebar_button path {
   width: 100%;
   fill: white;
 }
@@ -247,14 +255,16 @@ input, button, select, option {
 }
 .sidebar .drag_drop {
   width: 100%;
-  aspect-ratio: 16/9;
-  height: auto;
+  height: 20vh;
   border-radius: 6px;
   overflow: hidden;
   position: relative;
   background: white;
   display: grid;
   place-items: center;
+}
+.sidebar .drag_drop:not(:last-child) {
+  margin-bottom: 4.5%;
 }
 .sidebar .drag_drop input {
   cursor: pointer;
@@ -263,4 +273,12 @@ input, button, select, option {
   z-index: 2;
   padding: 0;
   opacity: 0;
+}
+.sidebar .drag_drop p {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  pointer-events: none;
+  text-align: left;
+  font-size: 0.9rem;
 }/*# sourceMappingURL=main.css.map */

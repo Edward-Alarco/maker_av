@@ -1,4 +1,4 @@
-:root{
+:root {
     --scheme: ligth dark;
     --gray: #bdc3c7;
     --gray2: #95a5a6;
@@ -10,85 +10,166 @@
     // color-scheme: var(--scheme);
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-body{
+
+body {
     position: relative;
     counter-reset: divCounter;
 }
-input, button{
+
+input,
+button {
     width: 100%;
     min-height: var(--input-height);
     padding-inline: 14px;
     font-size: 16px;
     border-radius: 0;
 }
-.w-100{
+
+.w-100 {
     width: 100%;
 }
-.h-100{
+
+.h-100 {
     height: 100%;
 }
-.vh-100{
+
+.vh-100 {
     height: 100vh;
 }
-.mvh-100{
+
+.mvh-100 {
     min-height: 100vh;
 }
-.wh-100{
+
+.wh-100 {
     @extend .w-100;
     @extend .h-100;
 }
-.center{
+
+.center {
     display: grid;
     place-items: center;
 }
-.absolute{
+
+.absolute {
     position: absolute;
 }
-.relative{
+
+.relative {
     position: relative;
 }
-a,button,[type="submit"]{
+
+a,
+button,
+[type="submit"] {
     transition: all .25s ease;
     cursor: pointer;
     text-decoration: none;
 }
-input, button, select, option{
+
+input,
+button,
+select,
+option {
     outline: none;
 }
 
-.canvas{
+%button {
+    color: white;
+    border: 2px solid var(--primary);
+    position: relative;
+    font-weight: 500;
+    background: transparent;
+    overflow: hidden;
+    margin-top: 12px;
+    &::before {
+        content: '';
+        position: absolute;
+        @extend .wh-100;
+        background: var(--primary);
+        inset: 0;
+        z-index: -1;
+        transition: all .25s ease;
+    }
+    &:hover {
+        color: var(--primary);
+        &::before {
+            left: -100%;
+        }
+    }
+}
+
+.canvas {
     height: 100vh;
     overflow: hidden;
     background: var(--gray);
-    &_container{
+
+    &_container {
         display: flex;
         height: 100%;
         aspect-ratio: var(--screen);
         width: auto;
         margin-inline: auto;
         background: white;
+
+        position: relative;
+
+        &>div{
+            position: absolute;
+        }
+
+        &>input{
+            position: absolute;
+            @extend .wh-100;
+            inset: 0;
+            min-height: auto;
+            padding: 0;
+            opacity: 0;
+        }
+
+        img:not(.canvas_bg){
+            position: absolute;
+        }
+
+        &:not(:has(.canvas_bg)){
+            &>input{
+                display: none;
+            }
+        }
     }
+
+    &_bg{
+        @extend .wh-100;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+
 }
-.contenedor{
+
+.contenedor {
     width: min(92%, 1400px);
     margin-inline: auto;
 }
-.entry{
+
+.entry {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .contenido{
+
+    .contenido {
         width: min(100%, 400px);
         margin: 0 auto;
     }
-    p{
+
+    p {
         text-align: center;
         font-family: 'Poppins', sans-serif;
         margin-bottom: 18px;
@@ -97,11 +178,13 @@ input, button, select, option{
         border-bottom: 1px solid rgba($color: #bdc3c7, $alpha: 0.6);
         font-size: 14px;
     }
-    form{
-        &>div{
+
+    form {
+        &>div {
             margin-bottom: 8px;
         }
-        label{
+
+        label {
             width: 100%;
             display: block;
             text-align: right;
@@ -109,125 +192,86 @@ input, button, select, option{
             color: var(--gray2);
         }
     }
-    input{
+
+    input {
         border: 1px solid var(--gray);
         text-align: center;
     }
-    button{
-        color: white;
-        border: 2px solid var(--primary);
-        position: relative;
-        font-weight: 500;
-        background: transparent;
-        overflow: hidden;
-        margin-top: 12px;
-        &::before{
-            content: '';
-            position: absolute;
-            @extend .wh-100;
-            background: var(--primary);
-            inset: 0;
-            z-index: -1;
-            transition: all .25s ease;
-        }
-        &:hover{
-            color: var(--primary);
-            &::before{
-                left: -100%;
-            }
-        }
+
+    button {
+        @extend %button;
     }
 }
 
-%abc{
+%abc {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     aspect-ratio: 1/1;
 }
 
-.views{
-    padding: 4rem 0;
-    &_grid{
+.views {
+    padding: 2.6rem 0 4rem;
+    &_contenedor {
+        width: 100%;
+        margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
+        gap: 16px 1.5%;
+        padding-block: 10px;
+    }
+    &_Add {
+        @extend %button;
+        min-height: var(--input-height);
+        padding-inline: 14px;
+        font-size: 16px;
+        display: flex;
         align-items: center;
-        gap: 20px;
         justify-content: center;
+        width: fit-content;
+        margin-top: 0;
+        margin-bottom: 20px;
     }
     .thumb{
-        width: 100%;
-        max-width: 194px;
         aspect-ratio: var(--screen);
-        height: auto;
-        border: 1px solid var(--gray);
-        @extend .center;
-        &:not(.add){
-            position: relative;
-            &::before{
-                position: absolute;
-                content: counter(divCounter);
-                counter-increment: divCounter;
-                @extend .center;
-                background: var(--primary);
-                color: white;
-                width: 30px;
-                height: 30px;
-                top: -15px;
-                border-radius: 50%;
-                aspect-ratio: 1/1;
-                right: -15px;
-                z-index: 2;
-                font-size: 14px;
-            }
-            &::after{
-                content: '';
-                z-index: 1;
-                position: absolute;
-                inset: 0;
-                transition: all .2s ease;
-                background: rgba($color: #000000, $alpha: 0.3);
-                opacity: 0;
-            }
-            &:empty{
-                &:hover{
-                    &::after{
-                        opacity: 1;
-                    }
-                }
-            }
-        }
-        &.add{
-            cursor: pointer;
-            order: 100;
-            div{
-                @extend %abc;
-                border: 2px solid var(--primary);
-                color: var(--primary);
-                @extend .center;
-                font-size: 18px;
-                font-weight: 600;
-            }
-        }
+        width: min(100%, 200px);
+        border: 1px solid var(--gray2);
     }
 }
 
-.sidebar{
+.sidebar {
     position: fixed;
     top: 0;
-    width: min(96%, 30vw);
-    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-    left: -30vw;
+    width: min(96%, 26vw);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    left: -26vw;
     z-index: 5;
     height: 100vh;
     transition: all .2s ease;
-    &.active{
+
+    &_bg{
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        @extend .vh-100;
+        background: transparent;
+        cursor: crosshair;
+        z-index: 4;
+        display: none;
+        &.active{
+            display: block;
+        }
+    }
+
+    &.active {
         left: 0;
     }
-    &>div{
+
+    &>div {
         background: var(--primary);
     }
-    &_button{
+
+    &_button {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -236,29 +280,38 @@ input, button, select, option{
         height: 50px;
         padding: 6px;
         display: flex;
+        overflow: hidden;
         border-radius: 0 5px 5px 0;
         right: -24px;
         align-items: center;
-        svg, path{
+
+        svg,
+        path {
             width: 100%;
             fill: white;
         }
     }
-    &_content{
+
+    &_content {
         @extend .wh-100;
         padding: 5%;
     }
-    .drag_drop{
+
+    .drag_drop {
         width: 100%;
-        aspect-ratio: 16/9;
-        height: auto;
+        height: 20vh;
         border-radius: 6px;
         overflow: hidden;
         position: relative;
         background: white;
         display: grid;
         place-items: center;
-        input{
+
+        &:not(:last-child){
+            margin-bottom: 4.5%;
+        }
+
+        input {
             cursor: pointer;
             position: absolute;
             inset: 0;
@@ -266,6 +319,16 @@ input, button, select, option{
             @extend .wh-100;
             padding: 0;
             opacity: 0;
+        }
+
+        p {
+            position: absolute;
+            top: 11px;
+            left: 11px;
+            pointer-events: none;
+            // cursor: pointer;
+            text-align: left;
+            font-size: 0.9rem;
         }
     }
 }

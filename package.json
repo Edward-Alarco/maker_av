@@ -12,9 +12,13 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^25.3.2",
+    "electron-prebuilt-compile": "^8.2.0",
     "standard": "^17.1.0"
   },
   "eslintConfig": {
     "extends": "standard"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
   }
 }
