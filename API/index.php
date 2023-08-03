@@ -2,7 +2,7 @@
 
 require_once(__DIR__.'/../models/bd.php');
 require_once('api.php');
-require_once('core.php');
+require_once(__DIR__.'/../core/app.php');
 require_once('cors.php');
 
 //obteniendo el metodo http
